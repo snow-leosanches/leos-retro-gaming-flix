@@ -1,0 +1,367 @@
+/* Leo's Retro Gaming Flix - Netflix-style streaming UI */
+
+:root {
+  --bg: #0d0d0d;
+  --bg-elevated: #141414;
+  --bg-card: #1a1a1a;
+  --text: #e5e5e5;
+  --text-muted: #a3a3a3;
+  --accent: #e50914;
+  --accent-hover: #f40612;
+  --font-logo: 'Bebas Neue', sans-serif;
+  --font-body: 'Source Sans 3', sans-serif;
+  --header-height: 4rem;
+  --card-radius: 6px;
+  --featured-height: 56vmin;
+  --card-height: 26vmin;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: clamp(14px, 2vmin, 18px);
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+#app {
+  min-height: 100vh;
+}
+
+/* ----- Header ----- */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  background: linear-gradient(to bottom, rgba(13, 13, 13, 0.95) 0%, transparent 100%);
+  z-index: 100;
+  transition: background 0.2s;
+}
+
+.site-header.scrolled {
+  background: var(--bg);
+}
+
+.logo {
+  font-family: var(--font-logo);
+  font-size: 1.75rem;
+  letter-spacing: 0.02em;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.logo:hover {
+  color: var(--accent-hover);
+}
+
+.nav {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-link {
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: #fff;
+}
+
+/* ----- Main content ----- */
+.main-content {
+  padding-top: var(--header-height);
+  padding-bottom: 4rem;
+}
+
+/* ----- Carousels ----- */
+.carousel-section {
+  padding: 1.5rem 0 1.5rem 2rem;
+}
+
+.carousel-section.featured-section {
+  padding-top: 2rem;
+}
+
+.carousel-title {
+  font-family: var(--font-logo);
+  font-size: 1.5rem;
+  letter-spacing: 0.03em;
+  margin: 0 0 0.75rem 0;
+  color: #fff;
+}
+
+.carousel-track {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 0.5rem;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.carousel-track::-webkit-scrollbar {
+  display: none;
+}
+
+/* Featured track - larger cards */
+.featured-track {
+  min-height: var(--featured-height);
+  gap: 0.75rem;
+}
+
+.featured-card {
+  flex: 0 0 44vmin;
+  min-width: 360px;
+  height: var(--featured-height);
+  scroll-snap-align: start;
+}
+
+.carousel-card {
+  position: relative;
+  flex: 0 0 30vmin;
+  min-width: 280px;
+  height: var(--card-height);
+  border: none;
+  border-radius: var(--card-radius);
+  padding: 0;
+  background: var(--bg-card);
+  cursor: pointer;
+  overflow: hidden;
+  scroll-snap-align: start;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.carousel-card:hover,
+.featured-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+  z-index: 2;
+}
+
+.carousel-card .card-img,
+.featured-card .card-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, transparent 50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0.75rem 1rem;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.carousel-card:hover .card-overlay,
+.featured-card:hover .card-overlay {
+  opacity: 1;
+}
+
+.featured-card .card-overlay {
+  opacity: 1;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, transparent 60%);
+}
+
+.card-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+  line-height: 1.2;
+  color: #fff;
+}
+
+.featured-card .card-title {
+  font-size: 1.1rem;
+}
+
+.card-meta {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+}
+
+.card-play-label {
+  font-size: 0.75rem;
+  color: var(--accent);
+  font-weight: 600;
+  margin-top: 0.35rem;
+}
+
+/* ----- Detail page ----- */
+.detail-content {
+  padding-top: var(--header-height);
+  min-height: 100vh;
+}
+
+.detail-hero {
+  position: relative;
+  min-height: 70vh;
+  display: flex;
+  align-items: flex-end;
+  padding: 0 2rem 4rem 2rem;
+  background: var(--bg) var(--thumb) center top / cover no-repeat;
+}
+
+.detail-hero-backdrop {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, var(--bg) 0%, transparent 40%, rgba(0, 0, 0, 0.4) 100%);
+  pointer-events: none;
+}
+
+.detail-hero-info {
+  position: relative;
+  max-width: 42rem;
+}
+
+.detail-title {
+  font-family: var(--font-logo);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  letter-spacing: 0.02em;
+  margin: 0 0 0.5rem 0;
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+.detail-meta {
+  font-size: 1rem;
+  color: var(--text-muted);
+  margin: 0 0 1rem 0;
+}
+
+.detail-description {
+  font-size: 1.05rem;
+  line-height: 1.5;
+  color: var(--text);
+  margin: 0 0 1.5rem 0;
+}
+
+.btn-play {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.75rem;
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #fff;
+  background: var(--accent);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-play:hover {
+  background: var(--accent-hover);
+}
+
+.btn-play-icon {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 8px 0 8px 14px;
+  border-color: transparent transparent transparent #fff;
+  margin-left: 2px;
+}
+
+/* ----- Fullscreen player ----- */
+.fullscreen-player {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.98);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+}
+
+.fullscreen-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 48px;
+  height: 48px;
+  font-size: 2rem;
+  line-height: 1;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 1001;
+  transition: background 0.2s;
+}
+
+.fullscreen-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.fullscreen-embed {
+  width: 100%;
+  max-width: 1200px;
+  aspect-ratio: 16 / 9;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #000;
+}
+
+.embed-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* ----- Error / empty ----- */
+.error-message {
+  padding: 2rem;
+  color: var(--text-muted);
+}
+
+.detail-content a {
+  color: var(--accent);
+  padding: 0 2rem;
+}
+
+/* ----- Smart TV / large screen ----- */
+@media (min-width: 1280px) {
+  .carousel-section {
+    padding-left: 3rem;
+  }
+  .featured-card {
+    min-width: 420px;
+  }
+  .carousel-card {
+    min-width: 320px;
+  }
+}

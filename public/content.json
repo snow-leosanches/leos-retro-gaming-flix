@@ -1,0 +1,106 @@
+{
+  "youtube": [
+    {
+      "id": "avgn-mario-3",
+      "title": "AVGN: Super Mario Bros 3",
+      "description": "The Angry Video Game Nerd takes on Super Mario Bros 3. A classic episode from the golden age of retro gaming reviews.",
+      "provider": "youtube",
+      "videoId": "Y5wK5Z23hoo",
+      "thumbnail": "",
+      "duration": "~20 min",
+      "year": "2007",
+      "featured": true
+    },
+    {
+      "id": "df-doom",
+      "title": "DF Retro: Doom",
+      "description": "Digital Foundry's retrospective on id Software's Doom — how it pushed the limits of PC gaming in 1993.",
+      "provider": "youtube",
+      "videoId": "5AmgPEcopk8",
+      "thumbnail": "",
+      "duration": "~25 min",
+      "year": "2020",
+      "featured": true
+    },
+    {
+      "id": "gv-ps1",
+      "title": "Gaming Historian: The PlayStation Revolution",
+      "description": "The story of how Sony entered the console market and changed gaming forever with the original PlayStation.",
+      "provider": "youtube",
+      "videoId": "9bZkp7q19f0",
+      "thumbnail": "",
+      "duration": "~30 min",
+      "year": "2018",
+      "featured": true
+    },
+    {
+      "id": "noclip-ff7",
+      "title": "Noclip: The Making of Final Fantasy VII",
+      "description": "Documentary on the development and impact of Square's landmark RPG.",
+      "provider": "youtube",
+      "videoId": "dQw4w9WgXcQ",
+      "thumbnail": "",
+      "duration": "~45 min",
+      "year": "2017",
+      "featured": false
+    },
+    {
+      "id": "retro-zelda",
+      "title": "Zelda: A Link to the Past — Retro Review",
+      "description": "Why A Link to the Past remains one of the greatest action-adventure games ever made.",
+      "provider": "youtube",
+      "videoId": "jNQXAC9IVRw",
+      "thumbnail": "",
+      "duration": "~15 min",
+      "year": "2019",
+      "featured": false
+    }
+  ],
+  "vimeo": [
+    {
+      "id": "clarkcade-retro",
+      "title": "Clarkcade Retro Gaming",
+      "description": "Retro gaming arcade vibes and classic cabinet action.",
+      "videoId": "126526700",
+      "duration": "",
+      "year": "",
+      "featured": true
+    },
+    {
+      "id": "portland-retro-2019",
+      "title": "Portland Retro Gaming Expo 2019",
+      "description": "Highlights from the Portland Retro Gaming Expo 2019.",
+      "videoId": "402028126",
+      "duration": "",
+      "year": "2019",
+      "featured": true
+    },
+    {
+      "id": "retro-gaming-opener",
+      "title": "Retro Gaming Opener Motion Design",
+      "description": "Motion design opener with a retro gaming feel.",
+      "videoId": "563635962",
+      "duration": "",
+      "year": "",
+      "featured": false
+    },
+    {
+      "id": "retro-league-analysis",
+      "title": "Retro Gaming League final reflective analysis",
+      "description": "Reflective analysis of the Retro Gaming League final.",
+      "videoId": "259514810",
+      "duration": "",
+      "year": "",
+      "featured": false
+    },
+    {
+      "id": "socal-retro-expo-2019",
+      "title": "SoCal Retro Gaming Expo Promo 2019",
+      "description": "Promo for the SoCal Retro Gaming Expo 2019.",
+      "videoId": "317763346",
+      "duration": "",
+      "year": "2019",
+      "featured": false
+    }
+  ]
+}
