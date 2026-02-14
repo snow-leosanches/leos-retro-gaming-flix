@@ -1,6 +1,7 @@
 import { getVideoById } from '../api'
 import { getThumbnailUrl } from '../utils/thumbnail'
 import { embedPlayer } from '../components/embed'
+import { startMediaTracking } from '../analytics/snowplow'
 
 type NavigateFn = (path: string, id?: string) => void
 
@@ -65,9 +66,17 @@ export async function renderDetail(
       `
       document.body.appendChild(playerContainer)
       const embedEl = document.getElementById('fullscreen-embed')
-      if (embedEl) embedPlayer(embedEl, video)
+      let mediaTracking: ReturnType<typeof startMediaTracking> | null = null
+      if (embedEl) {
+        embedPlayer(embedEl, video)
+        const iframe = embedEl.querySelector<HTMLIFrameElement>('iframe')
+        if (iframe) {
+          mediaTracking = startMediaTracking(iframe, video.provider, { label: video.title })
+        }
+      }
       const close = playerContainer.querySelector<HTMLButtonElement>('.fullscreen-close')
       function closePlayer(): void {
+        mediaTracking?.endTracking()
         if (document.body.contains(playerContainer)) {
           document.body.removeChild(playerContainer)
         }

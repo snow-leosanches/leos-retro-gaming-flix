@@ -2,6 +2,9 @@ import './styles.css'
 import { initRouter, navigate } from './router'
 import { renderHome } from './pages/home'
 import { renderDetail } from './pages/detail'
+import { initSnowplow, trackSnowplowPageView } from './analytics/snowplow'
+
+initSnowplow()
 
 const APP: HTMLElement | null = document.getElementById('app')
 function getApp(): HTMLElement {
@@ -34,9 +37,11 @@ function render(location?: LocationState | null): void {
 initRouter(() => {
   const [path, id] = parseHash()
   render({ path: path || 'home', id })
+  trackSnowplowPageView()
 })
 
 render()
+trackSnowplowPageView()
 
 window.addEventListener('scroll', () => {
   const header = document.querySelector('.site-header')

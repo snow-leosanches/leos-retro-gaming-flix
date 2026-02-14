@@ -34,6 +34,22 @@ Videos with `featured: true` appear in the “Featured” carousel; all videos a
 
 You can omit `provider` in the JSON; the app sets it from the array (`youtube` or `vimeo`).
 
+## Analytics (Snowplow)
+
+The app can send events to [Snowplow](https://snowplow.io/) using the JavaScript tracker with **YouTube** and **Vimeo** media plugins. Events are compatible with the [Snowplow Media Player dbt package](https://docs.snowplow.io/docs/modeling-your-data/modeling-your-data-with-dbt/dbt-models/dbt-media-player-data-model/) (media base, plays, stats, etc.).
+
+**Tracked:**
+
+- Page views (including hash route changes)
+- Activity (heartbeat)
+- Media: play, pause, seek, progress, volume, quality, errors, etc. (per YouTube/Vimeo embed)
+
+**Setup:**
+
+1. Copy `.env.example` to `.env`.
+2. Set `VITE_SNOWPLOW_COLLECTOR_URL` to your Snowplow collector URL (e.g. `https://your-collector.snowplow.io`).
+3. If the variable is unset, the app runs normally with no tracking.
+
 ## Run locally
 
 ```bash
@@ -53,6 +69,7 @@ Output is in `dist/`. Serve that folder (e.g. with `npm run preview` to test).
 
 ## Tech
 
-- **Vite** (vanilla JS, no framework)
+- **Vite** (vanilla TS, no framework)
 - **Hash routing** (`#/` home, `#/video/:id` detail)
 - **Centralized content**: single `public/content.json`
+- **Snowplow**: `@snowplow/browser-tracker` with YouTube and Vimeo media plugins

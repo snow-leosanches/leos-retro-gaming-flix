@@ -1,0 +1,117 @@
+/**
+ * Snowplow analytics with Media Player plugins (YouTube & Vimeo).
+ * Aligns with Snowplow Media Player dbt package / v2 media schemas.
+ * @see https://docs.snowplow.io/docs/modeling-your-data/modeling-your-data-with-dbt/dbt-models/dbt-media-player-data-model/
+ */
+
+import {
+  newTracker,
+  trackPageView,
+  enableActivityTracking,
+} from '@snowplow/browser-tracker'
+import { YouTubeTrackingPlugin, startYouTubeTracking, endYouTubeTracking } from '@snowplow/browser-plugin-youtube-tracking'
+import { VimeoTrackingPlugin, startVimeoTracking, endVimeoTracking } from '@snowplow/browser-plugin-vimeo-tracking'
+import type { VideoProvider } from '../types/content'
+
+const TRACKER_NAME = 'sp1'
+const COLLECTOR_URL = import.meta.env.VITE_SNOWPLOW_COLLECTOR_URL as string | undefined
+
+let initialized = false
+
+export function isSnowplowEnabled(): boolean {
+  return Boolean(COLLECTOR_URL && COLLECTOR_URL.length > 0)
+}
+
+/**
+ * Initialize the Snowplow tracker with YouTube and Vimeo media plugins.
+ * Call once at app startup (e.g. in main.ts).
+ * No-op if VITE_SNOWPLOW_COLLECTOR_URL is not set.
+ */
+export function initSnowplow(): void {
+  if (!COLLECTOR_URL || initialized) return
+  try {
+    newTracker(TRACKER_NAME, COLLECTOR_URL, {
+      appId: 'leos-retro-gaming-flix',
+      plugins: [
+        YouTubeTrackingPlugin(),
+        VimeoTrackingPlugin(),
+      ],
+    })
+    enableActivityTracking({
+      minimumVisitLength: 5,
+      heartbeatDelay: 10,
+    })
+    initialized = true
+  } catch (e) {
+    console.warn('[Snowplow] Tracker init failed:', e)
+  }
+}
+
+/**
+ * Track a page view. Call on route change or initial load.
+ */
+export function trackSnowplowPageView(): void {
+  if (!initialized) return
+  try {
+    trackPageView({}, [TRACKER_NAME])
+  } catch (e) {
+    console.warn('[Snowplow] trackPageView failed:', e)
+  }
+}
+
+export interface MediaTrackingHandle {
+  mediaSessionId: string | null
+  endTracking: () => void
+}
+
+/**
+ * Start media tracking for an embedded YouTube or Vimeo iframe.
+ * Call after the iframe is in the DOM. When the player is closed, call endTracking().
+ */
+export function startMediaTracking(
+  iframe: HTMLIFrameElement,
+  provider: VideoProvider,
+  options?: { label?: string }
+): MediaTrackingHandle {
+  const id = crypto.randomUUID()
+  let ended = false
+
+  function endTracking(): void {
+    if (ended || !initialized) return
+    ended = true
+    try {
+      if (provider === 'youtube') {
+        endYouTubeTracking(id)
+      } else {
+        endVimeoTracking(id)
+      }
+    } catch (e) {
+      console.warn('[Snowplow] endMediaTracking failed:', e)
+    }
+  }
+
+  if (!initialized) {
+    return { mediaSessionId: null, endTracking }
+  }
+
+  try {
+    if (provider === 'youtube') {
+      const sessionId = startYouTubeTracking({
+        id,
+        video: iframe,
+        label: options?.label,
+      })
+      return { mediaSessionId: sessionId ?? id, endTracking }
+    } else {
+      startVimeoTracking({
+        id,
+        video: iframe,
+        ...(options?.label !== undefined && { player: { label: options.label } }),
+      })
+      return { mediaSessionId: id, endTracking }
+    }
+  } catch (e) {
+    console.warn('[Snowplow] startMediaTracking failed:', e)
+    return { mediaSessionId: null, endTracking }
+  }
+}
