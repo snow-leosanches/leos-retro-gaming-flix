@@ -1,5 +1,5 @@
 import type { Video } from '../types/content'
-import { getFeaturedVideos, getAllVideosList } from '../api'
+import { getVideosByCategory, getAllVideosList } from '../api'
 import { getThumbnailUrl } from '../utils/thumbnail'
 import { enableCarouselDrag } from '../utils/carouselDrag'
 
@@ -24,47 +24,29 @@ function escapeHtml(s: string): string {
   return div.innerHTML
 }
 
-function featuredCarousel(items: Video[], navigate: NavigateFn): HTMLElement {
+function categoryCarousel(
+  title: string,
+  items: Video[],
+  navigate: NavigateFn,
+  options: { featured?: boolean } = {}
+): HTMLElement {
   const section = document.createElement('section')
-  section.className = 'carousel-section featured-section'
-  section.innerHTML = '<h2 class="carousel-title">Featured</h2>'
+  section.className = options.featured
+    ? 'carousel-section featured-section'
+    : 'carousel-section'
+  section.innerHTML = `<h2 class="carousel-title">${escapeHtml(title)}</h2>`
   const track = document.createElement('div')
-  track.className = 'carousel-track featured-track'
+  track.className = options.featured ? 'carousel-track featured-track' : 'carousel-track'
   for (const item of items) {
     const card = document.createElement('button')
     card.type = 'button'
-    card.className = 'carousel-card featured-card'
+    card.className = options.featured ? 'carousel-card featured-card' : 'carousel-card'
     card.innerHTML = `
       <img src="${getThumbnailUrl(item)}" alt="" class="card-img" loading="lazy" />
       <div class="card-overlay">
         <span class="card-title">${escapeHtml(item.title)}</span>
-        <span class="card-meta">${escapeHtml(item.duration ?? '')} · ${escapeHtml(item.year ?? '')}</span>
-        <span class="card-play-label">Play</span>
-      </div>
-    `
-    card.addEventListener('click', () => navigate('/video', item.id))
-    track.appendChild(card)
-  }
-  section.appendChild(track)
-  enableCarouselDrag(track)
-  return section
-}
-
-function allContentCarousel(items: Video[], navigate: NavigateFn): HTMLElement {
-  const section = document.createElement('section')
-  section.className = 'carousel-section'
-  section.innerHTML = '<h2 class="carousel-title">All Content</h2>'
-  const track = document.createElement('div')
-  track.className = 'carousel-track'
-  for (const item of items) {
-    const card = document.createElement('button')
-    card.type = 'button'
-    card.className = 'carousel-card'
-    card.innerHTML = `
-      <img src="${getThumbnailUrl(item)}" alt="" class="card-img" loading="lazy" />
-      <div class="card-overlay">
-        <span class="card-title">${escapeHtml(item.title)}</span>
-        <span class="card-meta">${escapeHtml(item.duration ?? '')}</span>
+        <span class="card-meta">${escapeHtml(item.duration ?? '')}${item.year ? ` · ${escapeHtml(item.year)}` : ''}</span>
+        ${options.featured ? '<span class="card-play-label">Play</span>' : ''}
       </div>
     `
     card.addEventListener('click', () => navigate('/video', item.id))
@@ -86,12 +68,16 @@ export async function renderHome(
   main.className = 'main-content'
 
   try {
-    const [featured, all] = await Promise.all([
-      getFeaturedVideos(),
+    const [categories, all] = await Promise.all([
+      getVideosByCategory(),
       getAllVideosList(),
     ])
-    main.appendChild(featuredCarousel(featured, navigate))
-    main.appendChild(allContentCarousel(all, navigate))
+    let first = true
+    for (const [category, videos] of categories) {
+      main.appendChild(categoryCarousel(category, videos, navigate, { featured: first }))
+      first = false
+    }
+    main.appendChild(categoryCarousel('All Videos', all, navigate))
   } catch {
     main.innerHTML = `<p class="error-message">Could not load content. Make sure content.json is available.</p>`
   }

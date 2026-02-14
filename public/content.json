@@ -9,7 +9,8 @@
       "thumbnail": "",
       "duration": "~20 min",
       "year": "2007",
-      "featured": true
+      "featured": true,
+      "tags": ["Documentary", "Nintendo"]
     },
     {
       "id": "df-doom",
@@ -20,7 +21,8 @@
       "thumbnail": "",
       "duration": "~25 min",
       "year": "2020",
-      "featured": true
+      "featured": true,
+      "tags": ["PC", "Documentary", "FPS"]
     },
     {
       "id": "gv-ps1",
@@ -31,7 +33,8 @@
       "thumbnail": "",
       "duration": "~30 min",
       "year": "2018",
-      "featured": true
+      "featured": true,
+      "tags": ["PlayStation", "Documentary", "Console"]
     },
     {
       "id": "noclip-ff7",
@@ -42,7 +45,8 @@
       "thumbnail": "",
       "duration": "~45 min",
       "year": "2017",
-      "featured": false
+      "featured": false,
+      "tags": ["Documentary", "RPG", "Square"]
     },
     {
       "id": "retro-zelda",
@@ -53,7 +57,68 @@
       "thumbnail": "",
       "duration": "~15 min",
       "year": "2019",
-      "featured": false
+      "featured": false,
+      "tags": ["Documentary", "Action-Adventure", "Nintendo"]
+    },
+    {
+      "id": "square-1",
+      "title": "Square Gaming Documentary",
+      "description": "A look at Square's impact on gaming and classic RPGs.",
+      "provider": "youtube",
+      "videoId": "pGt-rervGKI",
+      "thumbnail": "",
+      "duration": "",
+      "year": "",
+      "featured": false,
+      "tags": ["Documentary", "Square", "RPG"]
+    },
+    {
+      "id": "square-2",
+      "title": "Square Retrospective",
+      "description": "Retrospective on Square's legacy in the games industry.",
+      "provider": "youtube",
+      "videoId": "oJbq959x-xU",
+      "thumbnail": "",
+      "duration": "",
+      "year": "",
+      "featured": false,
+      "tags": ["Documentary", "Square", "RPG", "Console"]
+    },
+    {
+      "id": "square-3",
+      "title": "Square Classics",
+      "description": "Exploring Square's classic titles and their lasting influence.",
+      "provider": "youtube",
+      "videoId": "kUW9DSwa3B4",
+      "thumbnail": "",
+      "duration": "",
+      "year": "",
+      "featured": false,
+      "tags": ["Documentary", "Square", "RPG"]
+    },
+    {
+      "id": "square-4",
+      "title": "Square: A Look Back",
+      "description": "The story of Square and its landmark games.",
+      "provider": "youtube",
+      "videoId": "W6LSHOHMVvk",
+      "thumbnail": "",
+      "duration": "",
+      "year": "",
+      "featured": false,
+      "tags": ["Documentary", "Square", "Console"]
+    },
+    {
+      "id": "square-5",
+      "title": "Square Gaming History",
+      "description": "The history of Square and its contributions to retro gaming.",
+      "provider": "youtube",
+      "videoId": "wVovt9WvwCM",
+      "thumbnail": "",
+      "duration": "",
+      "year": "",
+      "featured": false,
+      "tags": ["Documentary", "Square", "RPG", "Retro"]
     }
   ],
   "vimeo": [
@@ -64,7 +129,8 @@
       "videoId": "126526700",
       "duration": "",
       "year": "",
-      "featured": true
+      "featured": true,
+      "tags": ["Documentary", "Retro", "Arcade"]
     },
     {
       "id": "portland-retro-2019",
@@ -73,7 +139,8 @@
       "videoId": "402028126",
       "duration": "",
       "year": "2019",
-      "featured": true
+      "featured": true,
+      "tags": ["Documentary", "Retro", "Arcade"]
     },
     {
       "id": "retro-gaming-opener",
@@ -82,7 +149,8 @@
       "videoId": "563635962",
       "duration": "",
       "year": "",
-      "featured": false
+      "featured": false,
+      "tags": ["Documentary", "Retro", "Arcade"]
     },
     {
       "id": "retro-league-analysis",
@@ -91,7 +159,8 @@
       "videoId": "259514810",
       "duration": "",
       "year": "",
-      "featured": false
+      "featured": false,
+      "tags": ["Documentary", "Retro", "Arcade"]
     },
     {
       "id": "socal-retro-expo-2019",
@@ -100,7 +169,8 @@
       "videoId": "317763346",
       "duration": "",
       "year": "2019",
-      "featured": false
+      "featured": false,
+      "tags": ["Documentary", "Retro", "Arcade"]
     }
   ]
 }

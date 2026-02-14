@@ -11,6 +11,7 @@ export interface Video {
   year?: string
   /** When true, shown in the Featured carousel on the home page */
   featured?: boolean
+  tags?: string[]
 }
 
 export interface Content {

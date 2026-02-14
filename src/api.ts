@@ -16,6 +16,18 @@ function getAllVideos(content: Content): Video[] {
   return [...fromYoutube, ...fromVimeo]
 }
 
+/** YouTube videos in content order (last in content.json is last in list) */
+export async function getYoutubeVideos(): Promise<Video[]> {
+  const content = await getContent()
+  return content.youtube.map((v) => withProvider(v, 'youtube'))
+}
+
+/** Vimeo videos in content order (last in content.json is last in list) */
+export async function getVimeoVideos(): Promise<Video[]> {
+  const content = await getContent()
+  return content.vimeo.map((v) => withProvider(v, 'vimeo'))
+}
+
 /** Fisher–Yates shuffle; returns a new array in random order */
 function shuffle<T>(array: T[]): T[] {
   const out = [...array]
@@ -60,6 +72,26 @@ export async function getFeaturedVideos(): Promise<Video[]> {
 export async function getAllVideosList(): Promise<Video[]> {
   const content = await getContent()
   return shuffle(getAllVideos(content))
+}
+
+/** Returns a map of category (tag) -> videos, ordered by first appearance */
+export async function getVideosByCategory(): Promise<Map<string, Video[]>> {
+  const content = await getContent()
+  const all = getAllVideos(content)
+  const map = new Map<string, Video[]>()
+  for (const v of all) {
+    if (v.tags) {
+      for (const tag of v.tags) {
+        let list = map.get(tag)
+        if (!list) {
+          list = []
+          map.set(tag, list)
+        }
+        list.push(v)
+      }
+    }
+  }
+  return map
 }
 
 export async function getVideoById(id: string): Promise<Video | null> {
