@@ -1,7 +1,8 @@
 /**
- * Snowplow analytics with Media Player plugins (YouTube & Vimeo).
+ * Snowplow analytics with Media Player plugins (YouTube, Vimeo, HTML5).
  * Aligns with Snowplow Media Player dbt package / v2 media schemas.
  * @see https://docs.snowplow.io/docs/modeling-your-data/modeling-your-data-with-dbt/dbt-models/dbt-media-player-data-model/
+ * @see https://docs.snowplow.io/docs/sources/web-trackers/tracking-events/media/html5/
  */
 
 import {
@@ -11,6 +12,11 @@ import {
 } from '@snowplow/browser-tracker'
 import { YouTubeTrackingPlugin, startYouTubeTracking, endYouTubeTracking } from '@snowplow/browser-plugin-youtube-tracking'
 import { VimeoTrackingPlugin, startVimeoTracking, endVimeoTracking } from '@snowplow/browser-plugin-vimeo-tracking'
+import {
+  MediaTrackingPlugin,
+  startHtml5MediaTracking,
+  endHtml5MediaTracking,
+} from '@snowplow/browser-plugin-media-tracking'
 import type { VideoProvider } from '../types/content'
 
 const TRACKER_NAME = 'sp1'
@@ -23,7 +29,7 @@ export function isSnowplowEnabled(): boolean {
 }
 
 /**
- * Initialize the Snowplow tracker with YouTube and Vimeo media plugins.
+ * Initialize the Snowplow tracker with YouTube, Vimeo, and HTML5 media plugins.
  * Call once at app startup (e.g. in main.ts).
  * No-op if VITE_SNOWPLOW_COLLECTOR_URL is not set.
  */
@@ -35,6 +41,7 @@ export function initSnowplow(): void {
       plugins: [
         YouTubeTrackingPlugin(),
         VimeoTrackingPlugin(),
+        MediaTrackingPlugin(),
       ],
     })
     enableActivityTracking({
@@ -115,3 +122,46 @@ export function startMediaTracking(
     return { mediaSessionId: null, endTracking }
   }
 }
+
+/**
+ * Start HTML5 media tracking for a <video> or <audio> element.
+ * Use when you have native HTML5 media on the page.
+ * @see https://docs.snowplow.io/docs/sources/web-trackers/tracking-events/media/html5/
+ */
+export function startHtml5Tracking(
+  element: string | HTMLMediaElement,
+  options?: { label?: string; boundaries?: number[] }
+): MediaTrackingHandle {
+  const id = crypto.randomUUID()
+  let ended = false
+
+  function endTracking(): void {
+    if (ended || !initialized) return
+    ended = true
+    try {
+      endHtml5MediaTracking(id)
+    } catch (e) {
+      console.warn('[Snowplow] endHtml5MediaTracking failed:', e)
+    }
+  }
+
+  if (!initialized) {
+    return { mediaSessionId: null, endTracking }
+  }
+
+  try {
+    startHtml5MediaTracking({
+      id,
+      video: element,
+      ...(options?.label !== undefined && { label: options.label }),
+      ...(options?.boundaries !== undefined && { boundaries: options.boundaries }),
+    })
+    return { mediaSessionId: id, endTracking }
+  } catch (e) {
+    console.warn('[Snowplow] startHtml5MediaTracking failed:', e)
+    return { mediaSessionId: null, endTracking }
+  }
+}
+
+/** Re-export for direct use (e.g. custom config). */
+export { startHtml5MediaTracking, endHtml5MediaTracking }

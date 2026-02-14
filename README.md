@@ -67,6 +67,15 @@ npm run build
 
 Output is in `dist/`. Serve that folder (e.g. with `npm run preview` to test).
 
+## Deploy on Vercel
+
+The project is configured for [Vercel](https://vercel.com):
+
+1. Push your repo to GitHub/GitLab/Bitbucket and [import it in Vercel](https://vercel.com/new).
+2. Vercel will detect the Vite app and use the build/output settings from `vercel.json`.
+3. **Optional (analytics):** In the Vercel project **Settings → Environment Variables**, add `VITE_SNOWPLOW_COLLECTOR_URL` with your Snowplow collector URL for production (and Preview if needed).
+4. Deploy; the site will be served from `dist/` with cache headers for assets.
+
 ## Tech
 
 - **Vite** (vanilla TS, no framework)
