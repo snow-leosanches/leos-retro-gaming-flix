@@ -2,18 +2,30 @@ import type { Video } from '../types/content'
 import { getVideosByCategory, getAllVideosList } from '../api'
 import { getThumbnailUrl } from '../utils/thumbnail'
 import { enableCarouselDrag } from '../utils/carouselDrag'
+import { getUser } from '../user-state'
 
 type NavigateFn = (path: string, id?: string) => void
 
-function header(_navigate: NavigateFn): HTMLElement {
+function header(navigate: NavigateFn): HTMLElement {
+  const user = getUser()
   const el = document.createElement('header')
   el.className = 'site-header'
   el.innerHTML = `
     <a href="#/" class="logo" aria-label="Leo's Retro Gaming Flix - Home">Leo's Retro Gaming Flix</a>
     <nav class="nav">
       <a href="#/" class="nav-link active">Home</a>
+      ${user
+        ? `<span class="nav-link nav-user" title="${user.email}">${user.name || user.email}</span>`
+        : `<a href="#/login" class="nav-link">Sign In</a>`
+      }
     </nav>
   `
+  if (!user) {
+    el.querySelector<HTMLAnchorElement>('a[href="#/login"]')!.addEventListener('click', (e) => {
+      e.preventDefault()
+      navigate('login')
+    })
+  }
   return el
 }
 

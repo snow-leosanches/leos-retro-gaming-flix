@@ -9,6 +9,8 @@ import {
   newTracker,
   trackPageView,
   enableActivityTracking,
+  setUserId,
+  clearUserData,
 } from '@snowplow/browser-tracker'
 import { YouTubeTrackingPlugin, startYouTubeTracking, endYouTubeTracking } from '@snowplow/browser-plugin-youtube-tracking'
 import { VimeoTrackingPlugin, startVimeoTracking, endVimeoTracking } from '@snowplow/browser-plugin-vimeo-tracking'
@@ -160,6 +162,25 @@ export function startHtml5Tracking(
   } catch (e) {
     console.warn('[Snowplow] startHtml5MediaTracking failed:', e)
     return { mediaSessionId: null, endTracking }
+  }
+}
+
+export function setSnowplowUserId(userId: string | null): void {
+  if (!initialized) return
+  try {
+    setUserId(userId, [TRACKER_NAME])
+  } catch (e) {
+    console.warn('[Snowplow] setUserId failed:', e)
+  }
+}
+
+export function resetSnowplowSession(): void {
+  if (!initialized) return
+  try {
+    clearUserData({ preserveSession: false, preserveUser: false }, [TRACKER_NAME])
+    setUserId(null, [TRACKER_NAME])
+  } catch (e) {
+    console.warn('[Snowplow] resetSession failed:', e)
   }
 }
 

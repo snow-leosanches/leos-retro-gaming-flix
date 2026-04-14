@@ -13,6 +13,7 @@
     "vite": "^5.4.0"
   },
   "dependencies": {
+    "@faker-js/faker": "^10.4.0",
     "@snowplow/browser-plugin-media-tracking": "^4.6.8",
     "@snowplow/browser-plugin-vimeo-tracking": "^4.6.8",
     "@snowplow/browser-plugin-youtube-tracking": "^4.6.8",

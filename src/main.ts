@@ -2,6 +2,7 @@ import './styles.css'
 import { initRouter, navigate } from './router'
 import { renderHome } from './pages/home'
 import { renderDetail } from './pages/detail'
+import { renderLogin } from './pages/login'
 import { initSnowplow, trackSnowplowPageView } from './analytics/snowplow'
 
 initSnowplow()
@@ -29,6 +30,8 @@ function render(location?: LocationState | null): void {
   const app = getApp()
   if ((path === 'video' || path === '/video') && id) {
     renderDetail(app, id, { navigate })
+  } else if (path === 'login') {
+    renderLogin(app, { navigate })
   } else {
     renderHome(app, { navigate })
   }
