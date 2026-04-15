@@ -1,4 +1,4 @@
-import { trackCustomerIdentification, setSnowplowUserId, isSnowplowEnabled } from '../analytics/snowplow'
+import { trackCustomerIdentification, isSnowplowEnabled } from '../analytics/snowplow'
 
 function isValidEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
@@ -45,7 +45,6 @@ export function createFooter(): HTMLElement {
       input.focus()
       return
     }
-    setSnowplowUserId(email)
     trackCustomerIdentification(email)
     showFeedback(isSnowplowEnabled() ? 'Subscribed!' : 'Subscribed! (tracking disabled)')
     input.value = ''
