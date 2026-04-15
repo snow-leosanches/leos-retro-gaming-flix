@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker'
 import { setUser } from '../user-state'
 import { knownCustomers } from '../known-customers'
-import { setSnowplowUserId, resetSnowplowSession } from '../analytics/snowplow'
+import { setSnowplowUserId, resetSnowplowSession, trackCustomerIdentification } from '../analytics/snowplow'
 
 type NavigateFn = (path: string, id?: string) => void
 
@@ -52,6 +52,7 @@ export function renderLogin(
       country: faker.location.country(),
     })
     setSnowplowUserId(email)
+    trackCustomerIdentification(email)
     navigate('home')
   })
 
@@ -108,6 +109,7 @@ export function renderLogin(
       country: '',
     })
     setSnowplowUserId(email)
+    trackCustomerIdentification(email)
     navigate('home')
   }
 
@@ -138,6 +140,7 @@ export function renderLogin(
         country: customer.country,
       })
       setSnowplowUserId(customer.id)
+      trackCustomerIdentification(customer.email)
       navigate('home')
     })
     knownSection.appendChild(btn)
