@@ -4,8 +4,11 @@ import { renderHome } from './pages/home'
 import { renderDetail } from './pages/detail'
 import { renderLogin } from './pages/login'
 import { initSnowplow, trackSnowplowPageView } from './analytics/snowplow'
+import { createFooter } from './components/footer'
 
 initSnowplow()
+
+document.body.appendChild(createFooter())
 
 const APP: HTMLElement | null = document.getElementById('app')
 function getApp(): HTMLElement {

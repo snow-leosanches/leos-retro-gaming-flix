@@ -11,7 +11,7 @@ export interface KnownCustomer {
 
 export const knownCustomers: KnownCustomer[] = [
   {
-    id: 'beavis.and.butthead@highland-high.edu',
+    id: 'known-customer-4',
     name: 'Beavis and Butthead',
     email: 'beavis.and.butthead@highland-high.edu',
     address: '1321 Wooddale Lane',
@@ -21,7 +21,7 @@ export const knownCustomers: KnownCustomer[] = [
     country: 'United States',
   },
   {
-    id: 'homer.simpson@donuts4life.com',
+    id: 'known-customer-5',
     name: 'Homer Simpson',
     email: 'homer.simpson@donuts4life.com',
     address: '742 Evergreen Terrace',
@@ -31,7 +31,7 @@ export const knownCustomers: KnownCustomer[] = [
     country: 'United States',
   },
   {
-    id: 'bobby.hill@propane-and-propane-accessories.com',
+    id: 'known-customer-6',
     name: 'Bobby Hill',
     email: 'bobby.hill@propane-and-propane-accessories.com',
     address: '84 Tom Landry Highway',

@@ -8,6 +8,7 @@
 import {
   newTracker,
   trackPageView,
+  trackSelfDescribingEvent,
   enableActivityTracking,
   setUserId,
   clearUserData,
@@ -171,6 +172,23 @@ export function setSnowplowUserId(userId: string | null): void {
     setUserId(userId, [TRACKER_NAME])
   } catch (e) {
     console.warn('[Snowplow] setUserId failed:', e)
+  }
+}
+
+export function trackCustomerIdentification(email: string): void {
+  if (!initialized) return
+  try {
+    trackSelfDescribingEvent(
+      {
+        event: {
+          schema: 'iglu:com.leosenterprises/customer_identification/jsonschema/1-0-0',
+          data: { email },
+        },
+      },
+      [TRACKER_NAME]
+    )
+  } catch (e) {
+    console.warn('[Snowplow] trackCustomerIdentification failed:', e)
   }
 }
 

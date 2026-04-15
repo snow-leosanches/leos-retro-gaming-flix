@@ -1,6 +1,6 @@
 {
   "igluCentralSchemas": [],
-  "dataStructures": [],
+  "dataStructures": ["iglu:com.leosenterprises/customer_identification/jsonschema/1-0-0"],
   "repositories": [],
   "eventSpecificationIds": [],
   "dataProductIds": ["6fdc526b-242b-454d-be32-74353e16cdf7"],
