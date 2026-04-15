@@ -3,6 +3,7 @@ import { initRouter, navigate } from './router'
 import { renderHome } from './pages/home'
 import { renderDetail } from './pages/detail'
 import { renderLogin } from './pages/login'
+import { renderProfile } from './pages/profile'
 import { initSnowplow, trackSnowplowPageView } from './analytics/snowplow'
 import { createFooter } from './components/footer'
 
@@ -35,6 +36,8 @@ function render(location?: LocationState | null): void {
     renderDetail(app, id, { navigate })
   } else if (path === 'login') {
     renderLogin(app, { navigate })
+  } else if (path === 'profile') {
+    renderProfile(app, { navigate })
   } else {
     renderHome(app, { navigate })
   }

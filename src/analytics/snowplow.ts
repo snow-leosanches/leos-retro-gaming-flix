@@ -8,11 +8,11 @@
 import {
   newTracker,
   trackPageView,
-  trackSelfDescribingEvent,
   enableActivityTracking,
   setUserId,
   clearUserData,
 } from '@snowplow/browser-tracker'
+import { trackCustomerIdentification as _trackCustomerIdentification } from '../../snowtype/snowplow'
 import { YouTubeTrackingPlugin, startYouTubeTracking, endYouTubeTracking } from '@snowplow/browser-plugin-youtube-tracking'
 import { VimeoTrackingPlugin, startVimeoTracking, endVimeoTracking } from '@snowplow/browser-plugin-vimeo-tracking'
 import {
@@ -178,15 +178,7 @@ export function setSnowplowUserId(userId: string | null): void {
 export function trackCustomerIdentification(email: string): void {
   if (!initialized) return
   try {
-    trackSelfDescribingEvent(
-      {
-        event: {
-          schema: 'iglu:com.leosenterprises/customer_identification/jsonschema/1-0-0',
-          data: { email },
-        },
-      },
-      [TRACKER_NAME]
-    )
+    _trackCustomerIdentification({ email }, [TRACKER_NAME])
   } catch (e) {
     console.warn('[Snowplow] trackCustomerIdentification failed:', e)
   }

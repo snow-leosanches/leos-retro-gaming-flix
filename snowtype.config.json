@@ -1,9 +1,13 @@
 {
   "igluCentralSchemas": [],
-  "dataStructures": ["iglu:com.leosenterprises/customer_identification/jsonschema/1-0-0"],
+  "dataStructures": [
+    "iglu:com.leosenterprises/customer_identification/jsonschema/1-0-0",
+    "iglu:com.leosretrogamingflix/video_details/jsonschema/1-0-0",
+    "iglu:com.leosretrogamingflix/video_category/jsonschema/1-0-0"
+  ],
   "repositories": [],
   "eventSpecificationIds": [],
-  "dataProductIds": ["6fdc526b-242b-454d-be32-74353e16cdf7"],
+  "dataProductIds": [],
   "organizationId": "b12539df-a711-42bd-bdfa-175308c55fd5",
   "tracker": "@snowplow/browser-tracker",
   "language": "typescript",

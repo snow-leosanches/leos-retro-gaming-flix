@@ -15,12 +15,17 @@ function header(navigate: NavigateFn): HTMLElement {
     <nav class="nav">
       <a href="#/" class="nav-link active">Home</a>
       ${user
-        ? `<span class="nav-link nav-user" title="${user.email}">${user.name || user.email}</span>`
+        ? `<a href="#/profile" class="nav-link nav-user" title="${user.email}">${user.name || user.email}</a>`
         : `<a href="#/login" class="nav-link">Sign In</a>`
       }
     </nav>
   `
-  if (!user) {
+  if (user) {
+    el.querySelector<HTMLAnchorElement>('a[href="#/profile"]')!.addEventListener('click', (e) => {
+      e.preventDefault()
+      navigate('profile')
+    })
+  } else {
     el.querySelector<HTMLAnchorElement>('a[href="#/login"]')!.addEventListener('click', (e) => {
       e.preventDefault()
       navigate('login')

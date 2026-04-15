@@ -453,14 +453,97 @@ body {
   border-color: #666;
 }
 
+
+/* ----- Profile page ----- */
+.profile-content {
+  min-height: 100vh;
+  padding-top: calc(var(--header-height) + 3rem);
+  padding-bottom: 4rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.profile-card {
+  width: 100%;
+  max-width: 520px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.profile-title {
+  font-family: var(--font-logo);
+  font-size: 2rem;
+  letter-spacing: 0.02em;
+  margin: 0 0 1.5rem 0;
+  color: #fff;
+}
+
+.profile-section {
+  border-top: 1px solid #222;
+  padding: 1.5rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.profile-section-title {
+  font-family: var(--font-logo);
+  font-size: 1.25rem;
+  letter-spacing: 0.03em;
+  margin: 0 0 0.25rem 0;
+  color: var(--text-muted);
+}
+
+.profile-field {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+.profile-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  min-width: 6rem;
+  flex-shrink: 0;
+}
+
+.profile-value {
+  font-size: 1rem;
+  color: var(--text);
+  text-align: right;
+  word-break: break-all;
+}
+
+.profile-empty {
+  color: #444;
+}
+
+.profile-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  padding-top: 0.5rem;
+}
+
 .nav-user {
-  cursor: default;
+  cursor: pointer;
   color: var(--text-muted);
   font-size: 0.85rem;
   max-width: 180px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  text-decoration: none;
+}
+
+.nav-user:hover {
+  color: #fff;
 }
 
 /* ----- Footer ----- */

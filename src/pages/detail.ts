@@ -2,6 +2,7 @@ import { getVideoById } from '../api'
 import { getThumbnailUrl } from '../utils/thumbnail'
 import { embedPlayer } from '../components/embed'
 import { startMediaTracking } from '../analytics/snowplow'
+import { getUser } from '../user-state'
 
 type NavigateFn = (path: string, id?: string) => void
 
@@ -27,11 +28,18 @@ export async function renderDetail(
     return
   }
 
+  const user = getUser()
   const headerEl = document.createElement('header')
   headerEl.className = 'site-header'
   headerEl.innerHTML = `
     <a href="#/" class="logo">Leo's Retro Gaming Flix</a>
-    <nav class="nav"><a href="#/" class="nav-link">Home</a></nav>
+    <nav class="nav">
+      <a href="#/" class="nav-link">Home</a>
+      ${user
+        ? `<a href="#/profile" class="nav-link nav-user" title="${user.email}">${escapeHtml(user.name || user.email)}</a>`
+        : `<a href="#/login" class="nav-link">Sign In</a>`
+      }
+    </nav>
   `
 
   const thumbUrl = getThumbnailUrl(video)

@@ -62,8 +62,17 @@ export function renderLogin(
     <p class="login-section-desc">Reset Snowplow anonymous session (clears domain/session cookies and user id).</p>
     <button type="button" class="btn-login btn-login-secondary">Reset Snowplow session</button>
   `
+  const resetFeedback = document.createElement('p')
+  resetFeedback.className = 'login-section-desc'
+  resetFeedback.style.color = '#4ade80'
+  resetFeedback.style.display = 'none'
+  resetFeedback.textContent = 'Snowplow session reset.'
+  resetSection.appendChild(resetFeedback)
+
   resetSection.querySelector('.btn-login-secondary')!.addEventListener('click', () => {
     resetSnowplowSession()
+    resetFeedback.style.display = ''
+    setTimeout(() => { resetFeedback.style.display = 'none' }, 3000)
   })
 
   // --- Manual Login ---
